@@ -26,6 +26,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const FREE_SHIPPING_THRESHOLD_PAISE = 1000000; // ₹10,000.00
   const isFreeShipping = cartTotalPaise >= FREE_SHIPPING_THRESHOLD_PAISE;
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD_PAISE - cartTotalPaise);
+  const gstPaise = Math.round(cartTotalPaise * 0.18);
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
@@ -166,6 +167,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     {isFreeShipping ? 'FREE' : formatINR(49900)}
                   </span>
                 </div>
+                <div className="flex justify-between text-stone-600">
+                  <span>GST (18%)</span>
+                  <span className="font-mono font-medium text-stone-900 tabular-nums">
+                    {formatINR(gstPaise)}
+                  </span>
+                </div>
                 <div className="flex justify-between text-stone-400 text-[11px]">
                   <span>Final price confirmed at checkout</span>
                   <span>Database verified</span>
@@ -175,7 +182,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <div className="pt-2 border-t border-stone-200 flex justify-between items-baseline">
                 <span className="text-sm font-semibold text-stone-900">Estimated Total</span>
                 <span className="font-mono text-lg font-bold text-stone-900 tabular-nums">
-                  {formatINR(cartTotalPaise + (isFreeShipping ? 0 : 49900))}
+                  {formatINR(cartTotalPaise + (isFreeShipping ? 0 : 49900) + gstPaise)}
                 </span>
               </div>
 
@@ -192,7 +199,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
               <div className="text-[11px] text-center text-stone-400 flex items-center justify-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-stone-400" />
-                <span>256-bit encrypted checkout with signature verification</span>
+                <span>Demo checkout: no money is charged</span>
               </div>
             </div>
           )}
